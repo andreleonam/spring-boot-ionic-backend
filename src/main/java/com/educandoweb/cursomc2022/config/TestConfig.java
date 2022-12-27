@@ -1,8 +1,12 @@
 package com.educandoweb.cursomc2022.config;
 
 import com.educandoweb.cursomc2022.entities.Categoria;
+import com.educandoweb.cursomc2022.entities.Cidade;
+import com.educandoweb.cursomc2022.entities.Estado;
 import com.educandoweb.cursomc2022.entities.Produto;
 import com.educandoweb.cursomc2022.repositories.CategoriaRepository;
+import com.educandoweb.cursomc2022.repositories.CidadeRepository;
+import com.educandoweb.cursomc2022.repositories.EstadoRepository;
 import com.educandoweb.cursomc2022.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,6 +24,12 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private EstadoRepository estadoRepository;
+
+    @Autowired
+    private CidadeRepository cidadeRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -44,5 +54,14 @@ public class TestConfig implements CommandLineRunner {
         p4.getCategorias().add(cat2);
         p5.getCategorias().add(cat2);
         produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
+        Estado est1 = new Estado(null, "Minas Gerais", "MG");
+        Estado est2 = new Estado(null, "São Paulo", "SP");
+        estadoRepository.saveAll(Arrays.asList(est1, est2));
+
+        Cidade cid1 = new Cidade(null, "Uberlandia", est1);
+        Cidade cid2 = new Cidade(null, "São Paulo", est2);
+        Cidade cid3 = new Cidade(null, "Campinas", est2);
+        cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
     }
 }
