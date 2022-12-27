@@ -2,6 +2,7 @@ package com.educandoweb.cursomc2022.services;
 
 import com.educandoweb.cursomc2022.entities.Produto;
 import com.educandoweb.cursomc2022.repositories.ProdutoRepository;
+import com.educandoweb.cursomc2022.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,6 @@ public class ProdutoService {
     @GetMapping
     public Produto findById(Long id) {
         Optional<Produto> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 }
