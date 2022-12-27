@@ -3,7 +3,9 @@ package com.educandoweb.cursomc2022.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_produto")
@@ -16,6 +18,10 @@ public class Produto implements Serializable {
 
     private String nome;
     private Double preco;
+
+    @ManyToMany
+    @JoinTable(name = "tb_produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+    private Set<Categoria> categorias = new HashSet<>();
 
     public Produto() {
     }
@@ -48,6 +54,10 @@ public class Produto implements Serializable {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public Set<Categoria> getCategorias() {
+        return categorias;
     }
 
     @Override
