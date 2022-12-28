@@ -1,5 +1,6 @@
 package com.educandoweb.cursomc2022.services;
 
+import com.educandoweb.cursomc2022.dto.CategoriaDTO;
 import com.educandoweb.cursomc2022.entities.Categoria;
 import com.educandoweb.cursomc2022.repositories.CategoriaRepository;
 import com.educandoweb.cursomc2022.services.exceptions.DataIntegrityException;
@@ -62,12 +63,13 @@ public class CategoriaService {
 
     }
 
-    public Page<Categoria> findPage(Integer page, Integer linesPerPage, String direction, String orderBy){
+    public Page<Categoria> findPage(Integer page, Integer linesPerPage, String direction, String orderBy) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repository.findAll(pageRequest);
     }
 
-
-
+    public Categoria fromDto(CategoriaDTO objDto) {
+        return new Categoria(objDto.getId(), objDto.getNome());
+    }
 
 }

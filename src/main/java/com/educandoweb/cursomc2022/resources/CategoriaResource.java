@@ -3,6 +3,7 @@ package com.educandoweb.cursomc2022.resources;
 import com.educandoweb.cursomc2022.dto.CategoriaDTO;
 import com.educandoweb.cursomc2022.entities.Categoria;
 import com.educandoweb.cursomc2022.services.CategoriaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -34,14 +35,16 @@ public class CategoriaResource {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> insert(@RequestBody Categoria obj) {
+    public ResponseEntity<Categoria> insert(@Valid @RequestBody CategoriaDTO objDto) {
+        Categoria obj = service.fromDto(objDto);
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).body(obj);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Categoria> update(@PathVariable Long id, @RequestBody Categoria obj) {
+    public ResponseEntity<Categoria> update(@PathVariable Long id, @Valid @RequestBody CategoriaDTO objDto) {
+        Categoria obj = service.fromDto(objDto);
         obj = service.update(id, obj);
         return ResponseEntity.ok().body(obj);
     }
