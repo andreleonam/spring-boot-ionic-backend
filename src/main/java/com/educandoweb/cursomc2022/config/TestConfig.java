@@ -1,13 +1,9 @@
 package com.educandoweb.cursomc2022.config;
 
-import com.educandoweb.cursomc2022.entities.Categoria;
-import com.educandoweb.cursomc2022.entities.Cidade;
-import com.educandoweb.cursomc2022.entities.Estado;
-import com.educandoweb.cursomc2022.entities.Produto;
-import com.educandoweb.cursomc2022.repositories.CategoriaRepository;
-import com.educandoweb.cursomc2022.repositories.CidadeRepository;
-import com.educandoweb.cursomc2022.repositories.EstadoRepository;
-import com.educandoweb.cursomc2022.repositories.ProdutoRepository;
+import com.educandoweb.cursomc2022.entities.*;
+import com.educandoweb.cursomc2022.entities.enums.TipoCliente;
+import com.educandoweb.cursomc2022.entities.enums.TipoEndereco;
+import com.educandoweb.cursomc2022.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +26,12 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private CidadeRepository cidadeRepository;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -63,5 +65,13 @@ public class TestConfig implements CommandLineRunner {
         Cidade cid2 = new Cidade(null, "São Paulo", est2);
         Cidade cid3 = new Cidade(null, "Campinas", est2);
         cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
+
+        Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "12345678901", TipoCliente.PESSOA_FISICA);
+        cli1.getTelefones().addAll(Arrays.asList("990001234", "32001234"));
+        clienteRepository.saveAll(Arrays.asList(cli1));
+
+        Endereco e1 = new Endereco(null, "Rua Flores", "300", "AP203", "Jardim", "49010123", TipoEndereco.RESIDENCIAL, cli1, cid1);
+        Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "49020123", TipoEndereco.OBRA, cli1, cid2);
+        enderecoRepository.saveAll(Arrays.asList(e1, e2));
     }
 }
