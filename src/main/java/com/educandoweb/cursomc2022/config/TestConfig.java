@@ -1,6 +1,7 @@
 package com.educandoweb.cursomc2022.config;
 
 import com.educandoweb.cursomc2022.entities.*;
+import com.educandoweb.cursomc2022.entities.enums.EstadoPagamento;
 import com.educandoweb.cursomc2022.entities.enums.TipoCliente;
 import com.educandoweb.cursomc2022.entities.enums.TipoEndereco;
 import com.educandoweb.cursomc2022.repositories.*;
@@ -9,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import java.time.Instant;
 import java.util.Arrays;
 
 @Configuration
@@ -32,6 +34,12 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private EnderecoRepository enderecoRepository;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private PagamentoRepository pagamentoRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -67,11 +75,32 @@ public class TestConfig implements CommandLineRunner {
         cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
 
         Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "12345678901", TipoCliente.PESSOA_FISICA);
+
         cli1.getTelefones().addAll(Arrays.asList("990001234", "32001234"));
-        clienteRepository.saveAll(Arrays.asList(cli1));
 
         Endereco e1 = new Endereco(null, "Rua Flores", "300", "AP203", "Jardim", "49010123", TipoEndereco.RESIDENCIAL, cli1, cid1);
         Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "49020123", TipoEndereco.OBRA, cli1, cid2);
+
+        cli1.getEnderecos().add(e1);
+        cli1.getEnderecos().add(e2);
+        clienteRepository.saveAll(Arrays.asList(cli1));
+
         enderecoRepository.saveAll(Arrays.asList(e1, e2));
+
+        Pedido ped1 = new Pedido(null, Instant.parse("2017-09-30T10:32:00Z"), cli1, e1);
+        Pedido ped2 = new Pedido(null, Instant.parse("2017-10-10T19:35:00Z"), cli1, e2);
+
+        Pagamento pgto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+        Pagamento pgto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, Instant.parse("2017-10-20T23:59:59Z"), null);
+
+        ped1.setPagamento(pgto1);
+        ped2.setPagamento(pgto2);
+
+        cli1.getPedidos().add(ped1);
+        cli1.getPedidos().add(ped2);
+        clienteRepository.saveAll(Arrays.asList(cli1));
+
+        pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+        pagamentoRepository.saveAll(Arrays.asList(pgto1, pgto2));
     }
 }
