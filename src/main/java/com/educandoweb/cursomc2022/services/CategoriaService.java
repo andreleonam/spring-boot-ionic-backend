@@ -2,9 +2,12 @@ package com.educandoweb.cursomc2022.services;
 
 import com.educandoweb.cursomc2022.entities.Categoria;
 import com.educandoweb.cursomc2022.repositories.CategoriaRepository;
+import com.educandoweb.cursomc2022.services.exceptions.DataIntegrityException;
 import com.educandoweb.cursomc2022.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -44,20 +47,17 @@ public class CategoriaService {
             throw new ResourceNotFoundException(id);
         }
     }
-/*
+
     public void delete(Long id) {
         try {
             repository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException(id);
         } catch (DataIntegrityViolationException e) {
-            throw new DatabaseException(e.getMessage());
+            throw new DataIntegrityException("Exclude is not possible");
         }
 
     }
 
 
-
-
-     */
 }
