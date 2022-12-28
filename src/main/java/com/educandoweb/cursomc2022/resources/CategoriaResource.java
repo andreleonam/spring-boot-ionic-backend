@@ -1,5 +1,6 @@
 package com.educandoweb.cursomc2022.resources;
 
+import com.educandoweb.cursomc2022.dto.CategoriaDTO;
 import com.educandoweb.cursomc2022.entities.Categoria;
 import com.educandoweb.cursomc2022.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -18,9 +20,10 @@ public class CategoriaResource {
     private CategoriaService service;
 
     @GetMapping
-    public ResponseEntity<List<Categoria>> findAll() {
+    public ResponseEntity<List<CategoriaDTO>> findAll() {
         List<Categoria> list = service.findAll();
-        return ResponseEntity.ok().body(list);
+        List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDto);
     }
 
     @GetMapping(value = "/{id}")
