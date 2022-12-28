@@ -13,20 +13,20 @@ public enum EstadoPagamento {
         this.codigo = codigo;
     }
 
+    public static EstadoPagamento valueOf(int codigo) {
+        for (EstadoPagamento value : EstadoPagamento.values()) {
+            if (value.getCodigo() == codigo) {
+                return value;
+            }
+        }
+        throw new IllegalArgumentException("Invalid EstadoPagamento code");
+    }
+
     public int getCodigo() {
         return codigo;
     }
 
     public String getDescricao() {
         return descricao;
-    }
-
-    public static EstadoPagamento valueOf(int codigo){
-        for (EstadoPagamento value : EstadoPagamento.values()){
-            if (value.getCodigo() == codigo) {
-                return value;
-            }
-        }
-        throw new IllegalArgumentException("Invalid EstadoPagamento code");
     }
 }

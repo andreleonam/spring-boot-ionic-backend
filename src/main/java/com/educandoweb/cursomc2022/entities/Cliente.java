@@ -2,7 +2,6 @@ package com.educandoweb.cursomc2022.entities;
 
 import com.educandoweb.cursomc2022.entities.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -36,7 +35,7 @@ public class Cliente implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
-    private Set<Pedido> pedidos =new HashSet<>();
+    private Set<Pedido> pedidos = new HashSet<>();
 
     public Cliente() {
     }

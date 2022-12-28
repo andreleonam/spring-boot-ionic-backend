@@ -9,7 +9,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "tb_pagamento_com_boleto")
-public class PagamentoComBoleto extends Pagamento{
+public class PagamentoComBoleto extends Pagamento {
     private static final long serialVersionUID = 1L;
 
 

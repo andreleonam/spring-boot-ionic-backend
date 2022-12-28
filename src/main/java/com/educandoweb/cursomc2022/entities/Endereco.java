@@ -1,7 +1,6 @@
 package com.educandoweb.cursomc2022.entities;
 
 import com.educandoweb.cursomc2022.entities.enums.TipoEndereco;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 

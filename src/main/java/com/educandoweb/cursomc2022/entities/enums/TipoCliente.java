@@ -12,20 +12,20 @@ public enum TipoCliente {
         this.codigo = codigo;
     }
 
+    public static TipoCliente valueOf(int codigo) {
+        for (TipoCliente value : TipoCliente.values()) {
+            if (value.getCodigo() == codigo) {
+                return value;
+            }
+        }
+        throw new IllegalArgumentException("Invalid TipoCliente code");
+    }
+
     public int getCodigo() {
         return codigo;
     }
 
     public String getDescricao() {
         return descricao;
-    }
-
-    public static TipoCliente valueOf(int codigo){
-        for (TipoCliente value : TipoCliente.values()){
-            if (value.getCodigo() == codigo) {
-                return value;
-            }
-        }
-        throw new IllegalArgumentException("Invalid TipoCliente code");
     }
 }

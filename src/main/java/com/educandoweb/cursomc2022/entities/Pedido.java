@@ -13,27 +13,21 @@ import java.util.Set;
 @Table(name = "tb_pedido")
 public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    @OneToMany(mappedBy = "id.pedido")
+    private final Set<ItemPedido> itens = new HashSet<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant momento;
-
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-
     @ManyToOne
     @JoinColumn(name = "enderecoDeEntrega_id")
     private Endereco enderecoDeEntrega;
-
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
-
-    @OneToMany(mappedBy = "id.pedido")
-    private final Set<ItemPedido> itens = new HashSet<>();
 
     public Pedido() {
     }

@@ -18,6 +18,7 @@ import java.util.List;
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
 
+
     @Autowired
     private CategoriaRepository categoriaRepository;
 

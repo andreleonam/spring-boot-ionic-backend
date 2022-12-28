@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_pagamento_com_cartao")
-public class PagamentoComCartao extends Pagamento{
+public class PagamentoComCartao extends Pagamento {
     private static final long serialVersionUID = 1L;
 
     private Integer numeroDeParcelas;

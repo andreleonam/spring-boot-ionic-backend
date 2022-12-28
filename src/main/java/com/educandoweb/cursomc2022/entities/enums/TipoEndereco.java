@@ -13,20 +13,20 @@ public enum TipoEndereco {
         this.codigo = codigo;
     }
 
+    public static TipoEndereco valueOf(int codigo) {
+        for (TipoEndereco value : TipoEndereco.values()) {
+            if (value.getCodigo() == codigo) {
+                return value;
+            }
+        }
+        throw new IllegalArgumentException("Invalid TipoCliente code");
+    }
+
     public int getCodigo() {
         return codigo;
     }
 
     public String getDescricao() {
         return descricao;
-    }
-
-    public static TipoEndereco valueOf(int codigo){
-        for (TipoEndereco value : TipoEndereco.values()){
-            if (value.getCodigo() == codigo) {
-                return value;
-            }
-        }
-        throw new IllegalArgumentException("Invalid TipoCliente code");
     }
 }
