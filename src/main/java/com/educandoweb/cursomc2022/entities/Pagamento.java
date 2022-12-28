@@ -1,6 +1,7 @@
 package com.educandoweb.cursomc2022.entities;
 
 import com.educandoweb.cursomc2022.entities.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ public abstract class Pagamento implements Serializable {
 
     private Integer estadoPagamento;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "pedido_id")
     @MapsId
