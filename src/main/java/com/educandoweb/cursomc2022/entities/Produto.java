@@ -23,7 +23,10 @@ public class Produto implements Serializable {
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "tb_produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
-    private Set<Categoria> categorias = new HashSet<>();
+    private final Set<Categoria> categorias = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.produto")
+    private final Set<ItemPedido> itens = new HashSet<>();
 
     public Produto() {
     }
@@ -60,6 +63,18 @@ public class Produto implements Serializable {
 
     public Set<Categoria> getCategorias() {
         return categorias;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public Set<Pedido> getPedidos() {
+        Set<Pedido> set = new HashSet<>();
+        for (ItemPedido obj : itens) {
+            set.add((obj.getPedido()));
+        }
+        return set;
     }
 
     @Override

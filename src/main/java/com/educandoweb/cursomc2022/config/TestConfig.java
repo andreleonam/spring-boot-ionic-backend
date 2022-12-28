@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Profile;
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @Profile("test")
@@ -41,29 +42,26 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private PagamentoRepository pagamentoRepository;
 
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
-        Categoria cat1 = new Categoria(null, "Electronics");
-        Categoria cat2 = new Categoria(null, "Books");
-        Categoria cat3 = new Categoria(null, "Computers");
-        categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+        Categoria cat1 = new Categoria(null, "Informatica");
+        Categoria cat2 = new Categoria(null, "Escritorio");
+        categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 
-        Produto p1 = new Produto(null, "The Lord of the Rings", 90.5);
-        Produto p2 = new Produto(null, "Smart TV", 2190.0);
-        Produto p3 = new Produto(null, "Macbook Pro", 1250.0);
-        Produto p4 = new Produto(null, "PC Gamer", 1200.0);
-        Produto p5 = new Produto(null, "Rails for Dummies", 100.99);
-        produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+        Produto p1 = new Produto(null, "Computador", 2000.0);
+        Produto p2 = new Produto(null, "Impressora", 800.0);
+        Produto p3 = new Produto(null, "Mouse", 80.0);
+        produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 
-        p1.getCategorias().add(cat2);
+        p1.getCategorias().add(cat1);
         p2.getCategorias().add(cat1);
-        p2.getCategorias().add(cat3);
-        p3.getCategorias().add(cat3);
-        p4.getCategorias().add(cat3);
-        p4.getCategorias().add(cat2);
-        p5.getCategorias().add(cat2);
-        produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+        p2.getCategorias().add(cat2);
+        p3.getCategorias().add(cat1);
+        produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 
         Estado est1 = new Estado(null, "Minas Gerais", "MG");
         Estado est2 = new Estado(null, "São Paulo", "SP");
@@ -83,7 +81,7 @@ public class TestConfig implements CommandLineRunner {
 
         cli1.getEnderecos().add(e1);
         cli1.getEnderecos().add(e2);
-        clienteRepository.saveAll(Arrays.asList(cli1));
+        clienteRepository.saveAll(List.of(cli1));
 
         enderecoRepository.saveAll(Arrays.asList(e1, e2));
 
@@ -98,9 +96,23 @@ public class TestConfig implements CommandLineRunner {
 
         cli1.getPedidos().add(ped1);
         cli1.getPedidos().add(ped2);
-        clienteRepository.saveAll(Arrays.asList(cli1));
+        clienteRepository.saveAll(List.of(cli1));
 
         pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
         pagamentoRepository.saveAll(Arrays.asList(pgto1, pgto2));
+
+        ItemPedido ip1 = new ItemPedido(ped1, p1, 0.0, 1, p1.getPreco());
+        ItemPedido ip2 = new ItemPedido(ped1, p3, 0.0, 2, p3.getPreco());
+        ItemPedido ip3 = new ItemPedido(ped2, p2, 100.0, 1, p2.getPreco());
+
+        ped1.getItens().add(ip1);
+        ped1.getItens().add(ip2);
+        ped2.getItens().add(ip3);
+
+        p1.getItens().add(ip1);
+        p2.getItens().add(ip3);
+        p3.getItens().add(ip2);
+
+        itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
     }
 }

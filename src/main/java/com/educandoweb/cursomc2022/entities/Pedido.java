@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_pedido")
@@ -29,6 +31,9 @@ public class Pedido implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
+
+    @OneToMany(mappedBy = "id.pedido")
+    private final Set<ItemPedido> itens = new HashSet<>();
 
     public Pedido() {
     }
@@ -78,6 +83,10 @@ public class Pedido implements Serializable {
 
     public void setPagamento(Pagamento pagamento) {
         this.pagamento = pagamento;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
     }
 
     @Override
