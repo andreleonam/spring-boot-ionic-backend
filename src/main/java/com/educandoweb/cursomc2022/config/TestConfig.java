@@ -51,7 +51,7 @@ public class TestConfig implements CommandLineRunner {
 
         Categoria cat1 = new Categoria(null, "Informatica");
         Categoria cat2 = new Categoria(null, "Escritorio");
-        Categoria cat3 = new Categoria(null, "Epi");
+        Categoria cat3 = new Categoria(null, "Automotivo");
         Categoria cat4 = new Categoria(null, "Material Hidraulico");
         Categoria cat5 = new Categoria(null, "Livro");
         Categoria cat6 = new Categoria(null, "Piso e Revestimento");
