@@ -25,6 +25,7 @@ public class Produto implements Serializable {
     @JoinTable(name = "tb_produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private final Set<Categoria> categorias = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.produto")
     private final Set<ItemPedido> itens = new HashSet<>();
 
@@ -69,6 +70,7 @@ public class Produto implements Serializable {
         return itens;
     }
 
+    @JsonIgnore
     public Set<Pedido> getPedidos() {
         Set<Pedido> set = new HashSet<>();
         for (ItemPedido obj : itens) {
