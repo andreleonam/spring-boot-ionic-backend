@@ -70,6 +70,6 @@ public class ClienteService {
     }
 
     public Cliente fromDto(ClienteDTO objDto) {
-        return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail());
+        return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
     }
 }
