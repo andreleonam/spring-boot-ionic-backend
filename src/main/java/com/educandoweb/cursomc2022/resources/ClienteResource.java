@@ -1,6 +1,7 @@
 package com.educandoweb.cursomc2022.resources;
 
 import com.educandoweb.cursomc2022.dto.ClienteDTO;
+import com.educandoweb.cursomc2022.dto.ClienteNewDTO;
 import com.educandoweb.cursomc2022.entities.Cliente;
 import com.educandoweb.cursomc2022.services.ClienteService;
 import jakarta.validation.Valid;
@@ -35,7 +36,7 @@ public class ClienteResource {
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> insert(@Valid @RequestBody ClienteDTO objDto) {
+    public ResponseEntity<Cliente> insert(@Valid @RequestBody ClienteNewDTO objDto) {
         Cliente obj = service.fromDto(objDto);
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();

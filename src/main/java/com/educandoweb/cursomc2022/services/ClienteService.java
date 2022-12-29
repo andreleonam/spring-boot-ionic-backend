@@ -1,8 +1,14 @@
 package com.educandoweb.cursomc2022.services;
 
 import com.educandoweb.cursomc2022.dto.ClienteDTO;
+import com.educandoweb.cursomc2022.dto.ClienteNewDTO;
+import com.educandoweb.cursomc2022.entities.Cidade;
 import com.educandoweb.cursomc2022.entities.Cliente;
+import com.educandoweb.cursomc2022.entities.Endereco;
+import com.educandoweb.cursomc2022.entities.enums.TipoCliente;
+import com.educandoweb.cursomc2022.entities.enums.TipoEndereco;
 import com.educandoweb.cursomc2022.repositories.ClienteRepository;
+import com.educandoweb.cursomc2022.repositories.EnderecoRepository;
 import com.educandoweb.cursomc2022.services.exceptions.DataIntegrityException;
 import com.educandoweb.cursomc2022.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
@@ -24,6 +31,9 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
     public List<Cliente> findAll() {
         return repository.findAll();
     }
@@ -34,8 +44,12 @@ public class ClienteService {
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
+    @Transactional
     public Cliente insert(Cliente obj) {
-        return repository.save(obj);
+        obj.setId(null);
+        obj = repository.save(obj);
+        enderecoRepository.saveAll(obj.getEnderecos());
+        return obj;
     }
 
     private void updateData(Cliente entity, Cliente obj) {
@@ -71,5 +85,21 @@ public class ClienteService {
 
     public Cliente fromDto(ClienteDTO objDto) {
         return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
+    }
+
+    public Cliente fromDto(ClienteNewDTO objDto) {
+        Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.valueOf(objDto.getTipoCliente()));
+        Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
+        Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(),
+                                    objDto.getBairro(), objDto.getCep(), TipoEndereco.valueOf(objDto.getTipoEndereco()), cli, cid);
+        cli.getEnderecos().add(end);
+        cli.getTelefones().add(objDto.getTelefone1());
+        if (objDto.getTelefone2() != null) {
+            cli.getTelefones().add(objDto.getTelefone2());
+        }
+        if (objDto.getTelefone3() != null) {
+            cli.getTelefones().add(objDto.getTelefone3());
+        }
+        return cli;
     }
 }
