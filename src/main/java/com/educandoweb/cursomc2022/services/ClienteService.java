@@ -73,7 +73,7 @@ public class ClienteService {
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException(id);
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Exclude is not possible");
+            throw new DataIntegrityException("The customer cannot be deleted, there are orders");
         }
 
     }

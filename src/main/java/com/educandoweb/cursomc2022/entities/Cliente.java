@@ -26,7 +26,7 @@ public class Cliente implements Serializable {
 
     private Integer tipoCliente;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private Set<Endereco> enderecos = new HashSet<>();
 
     @ElementCollection
