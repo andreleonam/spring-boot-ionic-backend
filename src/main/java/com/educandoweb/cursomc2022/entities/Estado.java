@@ -62,10 +62,6 @@ public class Estado implements Serializable {
         return cidades;
     }
 
-    public void setCidades(Set<Cidade> cidades) {
-        this.cidades = cidades;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
