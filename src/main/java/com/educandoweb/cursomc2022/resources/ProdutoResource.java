@@ -9,9 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Method;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/produtos")
@@ -34,7 +32,7 @@ public class ProdutoResource {
 
 
     @GetMapping(value = "/")
-   // @RequestMapping(value = "/", method = RequestMethod.GET)
+    // @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<Page<ProdutoDTO>> findPage(
             @RequestParam(value = "nome", defaultValue = "0") String nome,
             @RequestParam(value = "categorias", defaultValue = "0") String categorias,

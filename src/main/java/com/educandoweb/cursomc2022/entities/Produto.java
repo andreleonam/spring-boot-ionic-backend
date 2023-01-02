@@ -12,23 +12,18 @@ import java.util.Set;
 @Table(name = "tb_produto")
 public class Produto implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String nome;
-
-    private Double preco;
-
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "tb_produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private final Set<Categoria> categorias = new HashSet<>();
-
     @JsonIgnore
     @OneToMany(mappedBy = "id.produto")
     private final Set<ItemPedido> itens = new HashSet<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nome;
+    private Double preco;
 
     public Produto() {
     }

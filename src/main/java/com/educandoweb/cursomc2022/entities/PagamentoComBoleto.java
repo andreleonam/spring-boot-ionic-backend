@@ -2,6 +2,7 @@ package com.educandoweb.cursomc2022.entities;
 
 import com.educandoweb.cursomc2022.entities.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -9,6 +10,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "tb_pagamento_com_boleto")
+@JsonTypeName("pagamentoComBoleto")
 public class PagamentoComBoleto extends Pagamento {
     private static final long serialVersionUID = 1L;
 

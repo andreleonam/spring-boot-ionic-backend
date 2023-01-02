@@ -38,7 +38,7 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
         Cliente aux = repository.findClienteByEmail(objDto.getEmail());
 
         if (aux != null && !aux.getId().equals(uriId)) {
-            list.add(new FieldMessage("email","Email existente"));
+            list.add(new FieldMessage("email", "Email existente"));
         }
 
         for (FieldMessage e : list) {

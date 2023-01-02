@@ -1,9 +1,6 @@
 package com.educandoweb.cursomc2022.dto;
 
 import com.educandoweb.cursomc2022.entities.Produto;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 
