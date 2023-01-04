@@ -1,6 +1,6 @@
 package com.educandoweb.cursomc2022.config;
 
-import com.educandoweb.cursomc2022.services.DbService;
+import com.educandoweb.cursomc2022.services.DBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Profile;
 public class TestConfig {
 
     @Autowired
-    private DbService dbService;
+    private DBService dbService;
 
     @Bean
     public boolean instantiateDatabase() {

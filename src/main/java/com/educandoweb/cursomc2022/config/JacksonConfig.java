@@ -18,8 +18,6 @@ public class JacksonConfig {
                 objectMapper.registerSubtypes(PagamentoComBoleto.class);
                 super.configure(objectMapper);
             }
-
-            ;
         };
         return builder;
     }
